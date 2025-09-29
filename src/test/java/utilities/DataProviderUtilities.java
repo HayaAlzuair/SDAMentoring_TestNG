@@ -4,22 +4,36 @@ import org.testng.annotations.DataProvider;
 
 public class DataProviderUtilities {
 
+    @DataProvider
+    public Object[][] getFormData(){
+        return new Object[][]{
+                {"123-45-6789", "Norah", "Alshdoukhi", "Tester","nora", "nora@gmail.com", "nora1234"},
+                {"123-45-6789", "Sara", "Salem", "Designer","sara", "sara@gmail.com", "sara1234"},
+                {"123-45-6789", "Hala", "Ahmed", "Manager","hala", "hala@gmail.com", "hala1234"},
+                {"123-45-6789", "Hanan", "Khaled", "Developer","hanan", "hanan@gmail.com", "hanan123"},
+                {"123-45-6789", "Marya", "Abdullah", "Other","marya", "marya@gmail.com", "marya123"},
+        };
+    }
+
     @DataProvider(name = "faker")
     public Object[][] getFormDataFaker() {
         Faker faker = new Faker();
         return new Object[][]{
-                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.name().username(), faker.internet().emailAddress(), faker.internet().password()},
-                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.name().username(), faker.internet().emailAddress(), faker.internet().password()},
-                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.name().username(), faker.internet().emailAddress(), faker.internet().password()},
-                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.name().username(), faker.internet().emailAddress(), faker.internet().password()},
+                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.number().numberBetween(1,6),faker.name().username(), faker.internet().emailAddress(), faker.internet().password(8,10)},
+                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.number().numberBetween(1,6),faker.name().username(), faker.internet().emailAddress(), faker.internet().password(8,10)},
+                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.number().numberBetween(1,6),faker.name().username(), faker.internet().emailAddress(), faker.internet().password(8,10)},
+                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.number().numberBetween(1,6),faker.name().username(), faker.internet().emailAddress(), faker.internet().password(8,10)},
+                {faker.idNumber().ssnValid(), faker.name().firstName(), faker.name().lastName(), faker.number().numberBetween(1,6),faker.name().username(), faker.internet().emailAddress(), faker.internet().password(8,10)}
         };
     }
 
-    @DataProvider(name = "excel")
-    public Object[][] getFormDataExcel() {
-        ExcelUtilities eu = new ExcelUtilities("src/test/resources/Users.xlsx", "sheet1");
+
+    @DataProvider(name = "excelDP")
+    public Object[][] getUserDataFromExcel() {
+        ExcelUtilities eu = new ExcelUtilities("Users.xlsx", "UserData");
         return eu.getExcelDataAsArray();
     }
+
 
     @DataProvider
     public Object[][] addRecord(){
@@ -31,23 +45,34 @@ public class DataProviderUtilities {
         };
     }
 
+
+
     @DataProvider(name = "fakerRecords")
     public Object[][] addRecordFaker() {
         Faker faker = new Faker();
-        return new Object[][]{
-                {faker.name().name(), faker.number().numberBetween(18,65), faker.number().numberBetween(1, 6)},
-                {faker.name().name(), faker.number().numberBetween(18,65), faker.number().numberBetween(1, 6)},
-                {faker.name().name(), faker.number().numberBetween(18,65), faker.number().numberBetween(1,6)},
-                {faker.name().name(), faker.number().numberBetween(18,65), faker.number().numberBetween(1,6)}
-        };
+        int recordCount = 3; // Number of records to generate
+        String[] validCountries = {"USA","UK","Canada","Australia","Germany"};
+        Object[][] records = new Object[recordCount][3];
+
+        for (int i = 0; i < recordCount; i++) {
+            records[i][0] = faker.name().fullName();
+            records[i][1] = String.valueOf(faker.number().numberBetween(18, 60));
+            records[i][2] = validCountries[faker.number().numberBetween(0, validCountries.length)];
+        }
+
+        return records;
     }
+
+
+
     //excel
 
     @DataProvider(name = "excelRecords")
     public Object[][] getRecord() {
-        ExcelUtilities eu = new ExcelUtilities("RecordNames.xlsx", "Sheet1");
+        ExcelUtilities eu = new ExcelUtilities("/Users/hyo/IdeaProjects/SDAMentoring_TestNG/RecordNames.xlsx", "Sheet1");
         return eu.getExcelDataAsArray();
-    }
+    };
+
 
 
 }

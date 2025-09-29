@@ -36,9 +36,7 @@ public class T202_DataProviderWebTableTesting extends TestBase {
         //Add records to the using DataProvider
         driver.findElement(By.id("nameInput")).sendKeys(name);
         driver.findElement(By.id("ageInput")).sendKeys(age);
-        WebElement dd = driver.findElement(By.id("countrySelect"));
-        new Select(dd).selectByVisibleText(country);
-
+        driver.findElement(By.id("countrySelect")).sendKeys(country);
         driver.findElement(By.xpath("//button[.='Add Record']")).click();
     }
 
@@ -50,9 +48,7 @@ public class T202_DataProviderWebTableTesting extends TestBase {
         //Add records to the using DataProvider
         driver.findElement(By.id("nameInput")).sendKeys(name);
         driver.findElement(By.id("ageInput")).sendKeys(age);
-        WebElement dd = driver.findElement(By.id("countrySelect"));
-        new Select(dd).selectByVisibleText(country);
-
+        driver.findElement(By.id("countrySelect")).sendKeys(country);
         driver.findElement(By.xpath("//button[.='Add Record']")).click();
     }
 }
